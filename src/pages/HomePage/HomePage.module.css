@@ -1,0 +1,22 @@
+/* src/pages/HomePage/HomePage.module.css */
+.container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .folder {
+    width: 250px;
+    border-right: 1px solid #ddd;
+  }
+  
+  .canvas {
+    flex-grow: 1;
+    padding: 20px;
+  }
+  
+  .customizer {
+    width: 300px;
+    padding: 20px;
+    border-left: 1px solid #ddd;
+  }
+  

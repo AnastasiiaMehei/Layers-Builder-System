@@ -11,7 +11,6 @@ function App() {
   const loading = useSelector(selectLoading);
   return  (
       <>
-      <p>Hello world</p>
       {loading && <Loader/>}  
       <Layout>
       <Suspense fallback={null}>
