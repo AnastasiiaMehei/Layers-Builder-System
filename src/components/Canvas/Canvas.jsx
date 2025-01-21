@@ -1,21 +1,10 @@
-import { useState, useCallback } from "react";
-import ReactFlow, {
-  addEdge,
-  Background,
-  Controls,
-  MiniMap,
-  ReactFlowProvider,
-  useEdgesState,
-  useNodesState,
-} from "react-flow-renderer";
+// src/components/Canvas.js
+import  { useState, useCallback } from 'react';
+import ReactFlow, { addEdge, Background, Controls, MiniMap, ReactFlowProvider, useEdgesState, useNodesState } from 'reactflow';
+import 'reactflow/dist/style.css';
 
 const initialNodes = [
-  {
-    id: "1",
-    type: "input",
-    data: { label: "Start" },
-    position: { x: 250, y: 0 },
-  },
+  { id: '1', type: 'input', data: { label: 'Start' }, position: { x: 250, y: 0 } }
 ];
 
 const initialEdges = [];
@@ -25,10 +14,7 @@ const Canvas = () => {
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
 
-  const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
-    [setEdges]
-  );
+  const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
 
   const onAdd = useCallback(() => {
     const newNode = {
@@ -43,7 +29,7 @@ const Canvas = () => {
   }, [nodes, setNodes]);
 
   return (
-    <div style={{ height: "100%", width: "100%" }}>
+    <div style={{ height: '100%', width: '100%' }}>
       <button onClick={onAdd}>Add Node</button>
       <ReactFlowProvider>
         <ReactFlow
