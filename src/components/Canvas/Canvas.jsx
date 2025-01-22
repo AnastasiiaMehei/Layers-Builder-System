@@ -30,7 +30,7 @@ const Canvas = () => {
 
   return (
     <div style={{ height: '100%', width: '100%' }}>
-      <button onClick={onAdd}>Add Node</button>
+      {/* <button onClick={onAdd}>Add Node</button>
       <ReactFlowProvider>
         <ReactFlow
           nodes={nodes}
@@ -45,7 +45,7 @@ const Canvas = () => {
           <Controls />
           <Background />
         </ReactFlow>
-      </ReactFlowProvider>
+      </ReactFlowProvider> */}
     </div>
   );
 };

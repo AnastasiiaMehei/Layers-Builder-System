@@ -1,28 +1,23 @@
-import { lazy, Suspense,  } from "react";
-import { Route, Routes } from "react-router-dom";
-import { useSelector } from "react-redux";
-import Loader from "../Loader/Loader";
-const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
+import { lazy, Suspense } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import Loader from '../Loader/Loader';
+import { selectLoading } from '../../redux/diagrams/selectors';
 
-import Layout from "../Layout/Layout";
-import { selectLoading } from "../../redux/diagrams/selectors";
+const HomePage = lazy(() => import('../../pages/HomePage/HomePage'));
 
 function App() {
   const loading = useSelector(selectLoading);
-  return  (
-      <>
-      {loading && <Loader/>}  
-      <Layout>
+  return (
+    <>
+      {loading && <Loader />}
       <Suspense fallback={null}>
         <Routes>
           <Route path="/" element={<HomePage />} />
         </Routes>
       </Suspense>
-    </Layout> 
-    
-      
     </>
-  )
+  );
 }
 
-export default App
+export default App;
