@@ -1,10 +1,14 @@
+// src/components/TreeMapTable/TreeMapTable.jsx
+
 import React from "react";
 import Draggable from "react-draggable";
-import styles from "./TreeMapTable.module.css"; // Імпорт CSS модуля
 
-const TreeMapTable = ({ data }) => {
+const TreeMapTable = ({ data, selectedLayer, onLayerSelect }) => {
+  if (!data || !data.blocks) {
+    return <div>Loading...</div>;
+  }
+
   const renderBlock = (block) => {
-    // Перевірка, чи значення є дійсними числами
     const x = isNaN(block.x) ? 0 : block.x;
     const y = isNaN(block.y) ? 0 : block.y;
     const width = isNaN(block.width) ? 100 : block.width;
@@ -12,29 +16,44 @@ const TreeMapTable = ({ data }) => {
 
     return (
       <Draggable key={block.key} position={{ x, y }}>
-        <foreignObject x={x} y={y} width={width} height={height} className={styles.blockGroup}>
+        <g onClick={() => onLayerSelect(block)}>
           {block.shape === 'rectangle' ? (
-            <div className={styles.blockRectangle}>
-              <div className={styles.blockText}>{block.label}</div>
-            </div>
+            <rect
+              x={x}
+              y={y}
+              width={width}
+              height={height}
+              fill={block.color}
+              stroke="#000000"
+              strokeWidth="2"
+            />
           ) : (
-            <div className={styles.blockCircle}>
-              <div className={styles.blockText}>{block.label}</div>
-            </div>
+            <circle
+              cx={x + width / 2}
+              cy={y + height / 2}
+              r={width / 2}
+              fill={block.color}
+              stroke="#000000"
+              strokeWidth="2"
+            />
           )}
-        </foreignObject>
+          <text
+            x={x + 10}
+            y={y + 20}
+            fontSize="12"
+            fill="#ffffff"
+          >
+            {block.label}
+          </text>
+        </g>
       </Draggable>
     );
   };
 
   return (
-    <div className={styles.treeMapTableContainer}>
+    <div style={{ overflowX: "auto", height: "100vh", width: "1250px" }}>
       <svg width="100%" height="100%">
-        {data.blocks.map((block, index) => (
-          <React.Fragment key={block.key || index}>
-            {renderBlock(block)}
-          </React.Fragment>
-        ))}
+        {data.blocks.map(renderBlock)}
       </svg>
     </div>
   );

@@ -10,7 +10,7 @@ import Block from "../../components/Block/Block";
 import TreeMapTable from "../../components/TreeMapTable/TreeMapTable";
 
 export default function HomePage() {
-  const [selectedBlock, setSelectedBlock] = useState(null);
+  const [selectedLayer, setSelectedLayer] = useState(null);
   const dispatch = useDispatch();
   const diagrams = useSelector(selectDiagrams);
   const loading = useSelector(selectLoading);
@@ -19,8 +19,8 @@ export default function HomePage() {
     dispatch(fetchDiagrams());
   }, [dispatch]);
 
-  const handleBlockSelect = (block) => {
-    setSelectedBlock(block);
+  const handleLayerSelect = (layer) => {
+    setSelectedLayer(layer);
   };
 
   return (
@@ -33,21 +33,26 @@ export default function HomePage() {
             <FolderDirectory
               key={diagram.id || diagram._id}
               data={diagram}
-              onLayerSelect={handleBlockSelect}
-              selectedLayer={selectedBlock}
+              onLayerSelect={handleLayerSelect}
+              selectedLayer={selectedLayer}
             />
           ))
         )}
       </div>
       <div className={css.customizer}>
-        <Block selectedBlock={selectedBlock} onBlockChange={setSelectedBlock} />
+        <Block selectedBlock={selectedLayer} onBlockChange={setSelectedLayer} />
       </div>
       <div className={css.treemap}>
         {loading ? (
           <p>Loading...</p>
         ) : (
           diagrams.map((diagram) => (
-            <TreeMapTable key={diagram.id || diagram._id} data={diagram} />
+            <TreeMapTable
+              key={diagram.id || diagram._id}
+              data={diagram}
+              selectedLayer={selectedLayer}
+              onLayerSelect={handleLayerSelect}
+            />
           ))
         )}
       </div>
