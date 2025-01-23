@@ -1,68 +1,53 @@
-// src/components/TreeMapTable/TreeMapTable.jsx
-
-import React, { useState, useEffect } from "react";
 import Draggable from "react-draggable";
-import axios from "axios";
 
-const TreeMapTable = ({ selectedLayer, onLayerSelect }) => {
-  const [blocks, setBlocks] = useState([]);
+const TreeMapTable = ({ data }) => {
+  const renderBlock = (block) => {
+    // Перевірка, чи значення є дійсними числами
+    const x = isNaN(block.x) ? 0 : block.x;
+    const y = isNaN(block.y) ? 0 : block.y;
+    const width = isNaN(block.width) ? 100 : block.width;
+    const height = isNaN(block.height) ? 50 : block.height;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('https://layers-builder-system-server.onrender.com/api/diagrams/67927c686c595a3bf8cabdd5');
-        const { blocks } = response.data;
-        setBlocks(blocks);
-      } catch (error) {
-        console.error('Error fetching layers overview:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const renderBlock = (block) => (
-    <Draggable
-      key={block.key}
-      position={{ x: block.x, y: block.y }}
-    >
-      <g>
-        {block.shape === 'rectangle' ? (
-          <rect
-            x={block.x}
-            y={block.y}
-            width={block.width}
-            height={block.height}
-            fill={block.color}
-            stroke="#000000"
-            strokeWidth="2"
-          />
-        ) : (
-          <circle
-            cx={block.x + block.width / 2}
-            cy={block.y + block.height / 2}
-            r={block.width / 2}
-            fill={block.color}
-            stroke="#000000"
-            strokeWidth="2"
-          />
-        )}
-        <text
-          x={block.x + 10}
-          y={block.y + 20}
-          fontSize="12"
-          fill="#ffffff"
-        >
-          {block.label}
-        </text>
-      </g>
-    </Draggable>
-  );
+    return (
+      <Draggable key={block.key} position={{ x, y }}>
+        <g>
+          {block.shape === 'rectangle' ? (
+            <rect
+              x={x}
+              y={y}
+              width={width}
+              height={height}
+              fill={block.color}
+              stroke="#000000"
+              strokeWidth="2"
+            />
+          ) : (
+            <circle
+              cx={x + width / 2}
+              cy={y + height / 2}
+              r={width / 2}
+              fill={block.color}
+              stroke="#000000"
+              strokeWidth="2"
+            />
+          )}
+          <text
+            x={x + 10}
+            y={y + 20}
+            fontSize="12"
+            fill="#ffffff"
+          >
+            {block.label}
+          </text>
+        </g>
+      </Draggable>
+    );
+  };
 
   return (
     <div style={{ overflowX: "auto", height: "100vh" }}>
       <svg width="100%" height="100%">
-        {blocks.map(renderBlock)}
+        {data.blocks.map(renderBlock)}
       </svg>
     </div>
   );

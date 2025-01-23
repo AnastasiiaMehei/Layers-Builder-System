@@ -1,5 +1,5 @@
-
-import { useEffect, useRef } from "react";
+// TreeMap.jsx
+import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 
 const TreeMap = ({ data }) => {
