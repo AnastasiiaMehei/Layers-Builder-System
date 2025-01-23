@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+// src/pages/HomePage/HomePage.jsx
+
+import React, { useEffect, useState } from "react";
 import css from "./HomePage.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDiagrams } from "../../redux/diagrams/operations";
@@ -24,7 +26,18 @@ export default function HomePage() {
   return (
     <div className={css.container}>
       <div className={css.folder}>
-        <FolderDirectory onLayerSelect={handleBlockSelect} />
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          diagrams.map((diagram) => (
+            <FolderDirectory
+              key={diagram.id || diagram._id}
+              data={diagram}
+              onLayerSelect={handleBlockSelect}
+              selectedLayer={selectedBlock}
+            />
+          ))
+        )}
       </div>
       <div className={css.customizer}>
         <Block selectedBlock={selectedBlock} onBlockChange={setSelectedBlock} />

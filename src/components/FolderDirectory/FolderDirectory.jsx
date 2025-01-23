@@ -1,16 +1,18 @@
+// src/components/FolderDirectory/FolderDirectory.jsx
+
+import React from "react";
 import Tree from "rc-tree";
 import "rc-tree/assets/index.css";
 
 const FolderDirectory = ({ data, onLayerSelect, selectedLayer }) => {
-  // Перевірка, чи дані існують
   if (!data || !data.blocks) {
-    return <div>Loading...</div>; // Або інший компонент завантаження
+    return <div>Loading...</div>;
   }
 
   const folderStructure = data.blocks.map(block => ({
     key: block.key,
     title: block.label,
-    children: [] // Додайте дочірні елементи, якщо є
+    children: []
   }));
 
   const treeData = [

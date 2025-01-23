@@ -1,10 +1,14 @@
+// src/components/TreeMapTable/TreeMapTable.jsx
+
 import React from "react";
 import Draggable from "react-draggable";
-import styles from "./TreeMapTable.module.css"; // Імпорт CSS модуля
 
 const TreeMapTable = ({ data }) => {
+  if (!data || !data.blocks) {
+    return <div>Loading...</div>;
+  }
+
   const renderBlock = (block) => {
-    // Перевірка, чи значення є дійсними числами
     const x = isNaN(block.x) ? 0 : block.x;
     const y = isNaN(block.y) ? 0 : block.y;
     const width = isNaN(block.width) ? 100 : block.width;
@@ -12,27 +16,32 @@ const TreeMapTable = ({ data }) => {
 
     return (
       <Draggable key={block.key} position={{ x, y }}>
-        <g className={styles.blockGroup}>
+        <g>
           {block.shape === 'rectangle' ? (
             <rect
               x={x}
               y={y}
               width={width}
               height={height}
-              className={styles.blockRectangle}
+              fill={block.color}
+              stroke="#000000"
+              strokeWidth="2"
             />
           ) : (
             <circle
               cx={x + width / 2}
               cy={y + height / 2}
               r={width / 2}
-              className={styles.blockCircle}
+              fill={block.color}
+              stroke="#000000"
+              strokeWidth="2"
             />
           )}
           <text
             x={x + 10}
             y={y + 20}
-            className={styles.blockText}
+            fontSize="12"
+            fill="#ffffff"
           >
             {block.label}
           </text>
@@ -42,13 +51,9 @@ const TreeMapTable = ({ data }) => {
   };
 
   return (
-    <div className={styles.treeMapTableContainer}>
+    <div style={{ overflowX: "auto", height: "100vh" }}>
       <svg width="100%" height="100%">
-        {data.blocks.map((block, index) => (
-          <React.Fragment key={block.key || index}>
-            {renderBlock(block)}
-          </React.Fragment>
-        ))}
+        {data.blocks.map(renderBlock)}
       </svg>
     </div>
   );

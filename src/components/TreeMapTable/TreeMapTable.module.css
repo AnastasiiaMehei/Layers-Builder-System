@@ -1,4 +1,6 @@
 .treeMapTableContainer {
+    display: flex;
+    flex-direction: row;
     overflow-x: auto;
     height: 100vh;
     padding: 10px;
