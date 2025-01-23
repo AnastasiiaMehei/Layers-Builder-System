@@ -1,0 +1,29 @@
+.treeMapTableContainer {
+    overflow-x: auto;
+    height: 100vh;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+  }
+  
+  .blockGroup {
+    cursor: pointer;
+  }
+  
+  .blockRectangle {
+    fill: #88c0d0;
+    stroke: #4c566a;
+    stroke-width: 2;
+  }
+  
+  .blockCircle {
+    fill: #a3be8c;
+    stroke: #4c566a;
+    stroke-width: 2;
+  }
+  
+  .blockText {
+    font-size: 14px;
+    fill: #2e3440;
+  }
+  
