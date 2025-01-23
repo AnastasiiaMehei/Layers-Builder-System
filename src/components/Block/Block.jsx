@@ -1,5 +1,3 @@
-// Block.jsx
-
 const Block = ({ selectedNode, onNodeChange }) => {
   if (!selectedNode) {
     return <div>Select a node to customize</div>;
@@ -15,21 +13,11 @@ const Block = ({ selectedNode, onNodeChange }) => {
       <h3>Customize Node {selectedNode.id}</h3>
       <label>
         Label:
-        <input
-          type="text"
-          name="label"
-          value={selectedNode.data?.label || ''}
-          onChange={handleChange}
-        />
+        <input type="text" name="label" value={selectedNode.data.label} onChange={handleChange} />
       </label>
       <label>
         Color:
-        <input
-          type="color"
-          name="color"
-          value={selectedNode.data?.color || '#ff0000'} // Default to red
-          onChange={handleChange}
-        />
+        <input type="color" name="color" value={selectedNode.data.color || '#red'} onChange={handleChange} />
       </label>
       {/* Додайте інші властивості за необхідності */}
     </div>

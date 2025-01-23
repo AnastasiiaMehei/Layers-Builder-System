@@ -45,11 +45,8 @@ button {
   font-family: inherit;
   cursor: pointer;
   transition: border-color 0.25s;
-  border-radius: 8px;
-  border: 1px solid black;
-  width: 140px;  margin-top: 15px;
-  margin-bottom: 15px;
-  background-color: #8a8ab7;
+  border-radius: 72px;
+  width: 4px;
   border-color: chartreuse;
 }
 button:focus {

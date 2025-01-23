@@ -2,8 +2,12 @@
 .container {
     display: flex;
     height: 100vh;
+    flex-direction: row;
   }
-  
+  .layer {
+    display: flex;
+    flex-direction: row;
+  }
   .folder {
     width: 250px;
     border-right: 1px solid #ddd;

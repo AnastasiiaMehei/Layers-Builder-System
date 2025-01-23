@@ -1,5 +1,4 @@
-// HomePage.jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import css from './HomePage.module.css';
 import { useSelector } from 'react-redux';
 import { selectLoading } from '../../redux/diagrams/selectors';
@@ -52,8 +51,7 @@ const initialData = [
     ],
   },
 ];
-
-export default function HomePage() {
+const HomePage = () => {
   const [treeData, setTreeData] = useState(initialData);
   const [selectedLayer, setSelectedLayer] = useState(null);
   const loading = useSelector(selectLoading);
@@ -71,21 +69,21 @@ export default function HomePage() {
       <div className={css.folder}>
         <FolderDirectory
           treeData={treeData}
-          onNodeSelect={handleNodeSelect}
+          onLayerSelect={handleNodeSelect}
           onTreeChange={handleTreeChange}
         />
       </div>
       <div className={css.customizer}>
-        <Block selectedNode={selectedLayer} onNodeChange={setSelectedLayer} />
+        {selectedLayer && <Block node={selectedLayer} />}
       </div>
       <div className={css.treemap}>
         <TreeMapTable
-          data={treeData[0]}
           selectedLayer={selectedLayer}
-          onTreeChange={handleTreeChange}
           onLayerSelect={handleNodeSelect}
         />
       </div>
     </div>
   );
-}
+};
+
+export default HomePage;
