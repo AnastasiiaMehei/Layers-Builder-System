@@ -1,55 +1,32 @@
-import { useState } from "react";
+// src/components/FolderDirectory/FolderDirectory.jsx
+
+import React, { useState, useEffect } from "react";
 import Tree from "rc-tree";
 import "rc-tree/assets/index.css";
+import axios from "axios";
 
-const initialData = [
-  {
-    key: "2.1",
-    title: "Business Process Framework",
-    children: [
-      {
-        key: "2.1.1",
-        title: "Strategy to Readiness",
-        children: [
-          {
-            key: "2.1.1.1",
-            title: "Strategy Management",
-            children: [
-              {
-                key: "3.1.1",
-                title: "Market and Sales Domain",
-                children: [
-                  { key: "4.1", title: "Processes" },
-                  { key: "4.2", title: "Processes" },
-                  { key: "4.3", title: "Processes" },
-                  { key: "4.4", title: "Processes" },
-                  { key: "4.5", title: "Processes" },
-                ],
-              },
-              { key: "3.1.2", title: "Customer Domain" },
-              { key: "3.1.3", title: "Product Domain" },
-            ],
-          },
-          { key: "2.1.2", title: "Capability Management" },
-          { key: "2.1.3", title: "Business Value Development" },
-          { key: "2.1.4", title: "Operations Readiness & Support" },
-        ],
-      },
-      {
-        key: "2.2",
-        title: "Operations",
-        children: [
-          { key: "2.2.1", title: "Fulfillment" },
-          { key: "2.2.2", title: "Assurance" },
-          { key: "2.2.3", title: "Billing" },
-        ],
-      },
-    ],
-  },
-];
+const FolderDirectory = ({ onLayerSelect, selectedLayer }) => {
+  const [treeData, setTreeData] = useState([]);
 
-const FolderDirectory = ({ onLayerSelect }) => {
-  const [treeData, setTreeData] = useState(initialData);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://layers-builder-system-server.onrender.com/api/diagrams/67927c686c595a3bf8cabdd5');
+        const diagram = response.data;
+        // Припустимо, що ви хочете відобразити blocks як структуру папок
+        const folderStructure = diagram.blocks.map(block => ({
+          key: block.key,
+          title: block.label,
+          children: [], // Додайте дочірні елементи, якщо є
+        }));
+        setTreeData([{ key: diagram._id, title: diagram.diagramName, children: folderStructure }]);
+      } catch (error) {
+        console.error('Error fetching folder directory:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const onSelect = (selectedKeys, info) => {
     const selectedNode = info.node;
@@ -58,7 +35,13 @@ const FolderDirectory = ({ onLayerSelect }) => {
 
   return (
     <div style={{ width: "250px", borderRight: "1px solid #ddd" }}>
-      <Tree showLine defaultExpandAll treeData={treeData} onSelect={onSelect} />
+      <Tree
+        showLine
+        defaultExpandAll
+        treeData={treeData}
+        onSelect={onSelect}
+        selectedKeys={selectedLayer ? [selectedLayer.key] : []}
+      />
     </div>
   );
 };
