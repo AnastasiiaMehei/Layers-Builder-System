@@ -8,49 +8,54 @@ import TreeMapTable from '../../components/TreeMapTable/TreeMapTable';
 
 const initialData = [
   {
-    key: '0-0',
+    key: '1',
     title: 'Business Process Framework',
     children: [
       {
-        key: '0-0-0',
+        key: '2.1',
         title: 'Strategy to Readiness',
         children: [
           {
-            key: '0-0-0-0',
+            key: '2.1.1',
             title: 'Strategy Management',
             children: [
               {
-                key: '0-0-0-0-0',
+                key: '3.1.1',
                 title: 'Market and Sales Domain',
                 children: [
-                  { key: '0-0-0-0-0-0', title: 'Processes' },
-                  { key: '0-0-0-0-0-1', title: 'Processes' },
-                  { key: '0-0-0-0-0-2', title: 'Processes' },
-                  { key: '0-0-0-0-0-3', title: 'Processes' },
-                  { key: '0-0-0-0-0-4', title: 'Processes' },
+                  { key: '4.1', title: 'Processes' },
+                  { key: '4.2', title: 'Processes' },
+
                 ],
               },
-              { key: '0-0-0-0-1', title: 'Customer Domain' },
-              { key: '0-0-0-0-2', title: 'Product Domain' },
+              { key: '3.1.2', title: 'Customer Domain' },
+              { key: '3.1.3', title: 'Product Domain' },
             ],
           },
-          { key: '0-0-0-1', title: 'Capability Management' },
-          { key: '0-0-0-2', title: 'Business Value Development' },
-          { key: '0-0-0-3', title: 'Operations Readiness & Support' },
+          { key: '2.1.2', title: 'Capability Management' },
+          { key: '2.1.3', title: 'Business Value Development' },
+          { key: '2.1.4', title: 'Operations Readiness & Support' },
         ],
       },
       {
-        key: '0-0-1',
+        key: '2.2',
         title: 'Operations',
         children: [
-          { key: '0-0-1-0', title: 'Fulfillment' },
-          { key: '0-0-1-1', title: 'Assurance' },
-          { key: '0-0-1-2', title: 'Billing' },
+          {
+            key: '3.2.1',
+            title: 'Operations',
+            children: [
+              { key: '3.2.1.1', title: 'Fulfillment' },
+              { key: '3.2.1.2', title: 'Assurance' },
+              { key: '3.2.1.3', title: 'Billing' },
+            ],
+          },
         ],
       },
     ],
   },
 ];
+
 const HomePage = () => {
   const [treeData, setTreeData] = useState(initialData);
   const [selectedLayer, setSelectedLayer] = useState(null);

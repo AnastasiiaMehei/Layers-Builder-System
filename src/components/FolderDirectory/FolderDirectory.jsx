@@ -4,113 +4,51 @@ import "rc-tree/assets/index.css";
 
 const initialData = [
   {
-    key: "0-0",
+    key: "2.1",
     title: "Business Process Framework",
     children: [
       {
-        key: "0-0-0",
+        key: "2.1.1",
         title: "Strategy to Readiness",
         children: [
           {
-            key: "0-0-0-0",
+            key: "2.1.1.1",
             title: "Strategy Management",
             children: [
               {
-                key: "0-0-0-0-0",
+                key: "3.1.1",
                 title: "Market and Sales Domain",
                 children: [
-                  { key: "0-0-0-0-0-0", title: "Sales Strategy Management" },
-                  { key: "0-0-0-0-0-1", title: "Market Analysis" },
+                  { key: "4.1", title: "Processes" },
+                  { key: "4.2", title: "Processes" },
+                  { key: "4.3", title: "Processes" },
+                  { key: "4.4", title: "Processes" },
+                  { key: "4.5", title: "Processes" },
                 ],
               },
-              {
-                key: "0-0-0-0-1",
-                title: "Customer Domain",
-                children: [
-                  { key: "0-0-0-0-1-0", title: "Customer Strategy" },
-                ],
-              },
-              {
-                key: "0-0-0-0-2",
-                title: "Product Domain",
-                children: [
-                  { key: "0-0-0-0-2-0", title: "Product Development" },
-                ],
-              },
+              { key: "3.1.2", title: "Customer Domain" },
+              { key: "3.1.3", title: "Product Domain" },
             ],
           },
-          {
-            key: "0-0-0-1",
-            title: "Capability Management",
-            children: [
-              {
-                key: "0-0-0-1-0",
-                title: "Organizational Design",
-                children: [
-                  { key: "0-0-0-1-0-0", title: "Structure Development" },
-                ],
-              },
-            ],
-          },
-          {
-            key: "0-0-0-2",
-            title: "Business Value Development",
-            children: [
-              {
-                key: "0-0-0-2-0",
-                title: "Value Proposition",
-                children: [
-                  { key: "0-0-0-2-0-0", title: "Customer Value" },
-                ],
-              },
-            ],
-          },
-          {
-            key: "0-0-0-3",
-            title: "Operations Readiness & Support",
-            children: [
-              {
-                key: "0-0-0-3-0",
-                title: "Process Optimization",
-                children: [
-                  { key: "0-0-0-3-0-0", title: "Workflow Improvement" },
-                ],
-              },
-            ],
-          },
+          { key: "2.1.2", title: "Capability Management" },
+          { key: "2.1.3", title: "Business Value Development" },
+          { key: "2.1.4", title: "Operations Readiness & Support" },
         ],
       },
       {
-        key: "0-0-1",
+        key: "2.2",
         title: "Operations",
         children: [
-          {
-            key: "0-0-1-0",
-            title: "Fulfillment",
-            children: [
-              { key: "0-0-1-0-0", title: "Order Fulfillment" },
-            ],
-          },
-          {
-            key: "0-0-1-1",
-            title: "Assurance",
-            children: [
-              { key: "0-0-1-1-0", title: "Quality Assurance" },
-            ],
-          },
-          {
-            key: "0-0-1-2",
-            title: "Billing",
-            children: [
-              { key: "0-0-1-2-0", title: "Invoice Processing" },
-            ],
-          },
+          { key: "2.2.1", title: "Fulfillment" },
+          { key: "2.2.2", title: "Assurance" },
+          { key: "2.2.3", title: "Billing" },
         ],
       },
     ],
   },
 ];
-const FolderDirectory = ({ onLayerSelect, selectedLayer }) => {
+
+const FolderDirectory = ({ onLayerSelect }) => {
   const [treeData, setTreeData] = useState(initialData);
 
   const onSelect = (selectedKeys, info) => {
@@ -120,13 +58,7 @@ const FolderDirectory = ({ onLayerSelect, selectedLayer }) => {
 
   return (
     <div style={{ width: "250px", borderRight: "1px solid #ddd" }}>
-      <Tree
-        showLine
-        defaultExpandAll
-        treeData={treeData}
-        onSelect={onSelect}
-        selectedKeys={selectedLayer ? [selectedLayer.key] : []}
-      />
+      <Tree showLine defaultExpandAll treeData={treeData} onSelect={onSelect} />
     </div>
   );
 };
