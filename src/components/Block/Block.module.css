@@ -1,0 +1,72 @@
+/* src/components/Block/Block.module.css */
+
+.block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    transition: all 0.3s ease;
+    padding: 8px;
+    cursor: move;
+  }
+  
+  .block:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .editor {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 8px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200px;
+  }
+  
+  .editor input,
+  .editor button {
+    margin: 4px 0;
+  }
+  
+  .editor input[type="text"] {
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .editor input[type="color"],
+  .editor input[type="number"],
+  .editor input[type="text"] {
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .editor button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .editor button:hover {
+    background-color: #0056b3;
+  }
+  
+  .editor button.delete {
+    background-color: #dc3545;
+  }
+  
+  .editor button.delete:hover {
+    background-color: #c82333;
+  }
+  

@@ -1,0 +1,37 @@
+/* src/components/Canvas/Canvas.module.css */
+
+.canvas {
+    width: 150px;
+    height: 85px;
+    background-color: #f0f0f0;
+    position: relative;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    display: flex
+;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .addButton {
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100px;
+  }
+  
+  .addButton:hover {
+    background-color: #0056b3;
+  }
+  
+  .blockContainer {
+    width: 100%;
+    height: calc(100% - 50px); /* Subtract the height of the button */
+    position: relative;
+  }
+  

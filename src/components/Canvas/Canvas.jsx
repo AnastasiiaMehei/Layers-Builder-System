@@ -1,71 +1,78 @@
-import { useState, useCallback } from 'react';
-import ReactFlow, {
-  addEdge,
-  Background,
-  Controls,
-  MiniMap,
-  ReactFlowProvider,
-  useEdgesState,
-  useNodesState,
-} from 'reactflow';
-import 'reactflow/dist/style.css';
+// src/components/Canvas/Canvas.jsx
 
-const initialNodes = [
-  { id: '1', type: 'input', data: { label: 'Start' }, position: { x: 250, y: 0 } },
-];
-
-const initialEdges = [];
+import React, { useState } from "react";
+import Block from "../Block/Block";
+import Modal from "../Modal/Modal";
+import { v4 as uuidv4 } from "uuid";
+import css from "./Canvas.module.css";
 
 const Canvas = () => {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  const [reactFlowInstance, setReactFlowInstance] = useState(null);
+  const [blocks, setBlocks] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [blockData, setBlockData] = useState({
+    title: "New Block",
+    color: "#ffffff",
+    borderColor: "#000000",
+    opacity: 1,
+    shape: "rectangle",
+    width: 100,
+    height: 50,
+  });
 
-  const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
+  const addBlock = () => {
+    setIsModalOpen(true);
+  };
 
-  const onAddBlock = useCallback(() => {
-    const newNode = {
-      id: (nodes.length + 1).toString(),
-      data: { label: `Block ${nodes.length + 1}` },
-      position: {
-        x: Math.random() * 400,
-        y: Math.random() * 400,
-      },
+  const handleSubmit = () => {
+    const newBlock = {
+      key: uuidv4(),
+      ...blockData
     };
-    setNodes((nds) => nds.concat(newNode));
-  }, [nodes, setNodes]);
+    setBlocks([...blocks, newBlock]);
+    setIsModalOpen(false);
+    setBlockData({
+      title: "New Block",
+      color: "#ffffff",
+      borderColor: "#000000",
+      opacity: 1,
+      shape: "rectangle",
+      width: 100,
+      height: 50,
+    });
+  };
 
-  const onDeleteBlock = useCallback((id) => {
-    setNodes((nds) => nds.filter(node => node.id !== id));
-  }, []);
-
-  const onChangeBlock = useCallback((id, newData) => {
-    setNodes((nds) =>
-      nds.map(node => node.id === id ? { ...node, data: newData } : node)
+  const updateBlock = (updatedBlock) => {
+    setBlocks(
+      blocks.map((block) =>
+        block.key === updatedBlock.key ? updatedBlock : block
+      )
     );
-  }, []);
+  };
+
+  const deleteBlock = (blockKey) => {
+    setBlocks(blocks.filter((block) => block.key !== blockKey));
+  };
 
   return (
-    <div style={{ height: '100%', width: '100%' }}>
-      <button onClick={onAddBlock}>Add Block</button>
-      
-      <ReactFlowProvider>
-        <div style={{ height: '90%', width: '100%' }}>
-          <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            onConnect={onConnect}
-            onInit={setReactFlowInstance}
-            fitView
-          >
-            <MiniMap />
-            <Controls />
-            <Background />
-          </ReactFlow>
-        </div>
-      </ReactFlowProvider>
+    <div id="canvas" className={css.canvas}>
+      <button className={css.addButton} onClick={addBlock}>Add Block</button>
+      <div className={css.blockContainer}>
+        {blocks.map((block) => (
+          <Block
+            key={block.key}
+            block={block}
+            onUpdate={updateBlock}
+            onDelete={deleteBlock}
+          />
+        ))}
+      </div>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleSubmit}
+        blockData={blockData}
+        setBlockData={setBlockData}
+      />
     </div>
   );
 };

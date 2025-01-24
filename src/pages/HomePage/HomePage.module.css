@@ -1,22 +1,37 @@
 /* src/pages/HomePage/HomePage.module.css */
+
 .container {
-    display: flex;
-    height: 100vh;
-  }
-  
-  .folder {
-    width: 250px;
-    border-right: 1px solid #ddd;
-  }
-  
-  .canvas {
-    flex-grow: 1;
-    padding: 20px;
-  }
-  
-  .customizer {
-    width: 120px;
-    padding: 20px;
-    border-left: 1px solid #ddd;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.folders {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px;
+  height: 442px;
+}
+
+.canvas {
+  width: 100%;
+  height: auto;
+  background-color: #ffffff;
+  position: relative;
+  margin: 20px 0;
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.folder, .mainInfo, .customizer, .treemap {
+  margin: 10px;
+}
+.mainInfo {
+  display: flex;
+  flex-direction: row;
+}

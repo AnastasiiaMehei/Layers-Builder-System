@@ -14,9 +14,12 @@
     "@emotion/styled": "^11.14.0",
     "@mui/material": "^6.4.1",
     "@reduxjs/toolkit": "^2.5.0",
+    "antd": "^5.23.2",
     "axios": "^1.7.9",
+    "file-saver": "^2.0.5",
     "gojs": "^3.0.18",
     "gojs-react": "^1.1.2",
+    "jspdf": "^2.5.2",
     "konva": "^9.3.18",
     "modern-normalize": "^3.0.1",
     "rc-tree": "^5.13.0",
@@ -32,7 +35,8 @@
     "react-sortable-tree": "^2.8.0",
     "reactflow": "^11.11.4",
     "redux-persist": "^6.0.0",
-    "toolkit": "^1.5.4"
+    "toolkit": "^1.5.4",
+    "uuid": "^11.0.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

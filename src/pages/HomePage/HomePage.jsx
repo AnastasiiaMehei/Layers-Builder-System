@@ -1,11 +1,14 @@
+// src/pages/HomePage/HomePage.jsx
+
 import { useEffect, useState } from "react";
 import css from "./HomePage.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDiagrams } from "../../redux/diagrams/operations";
 import { selectDiagrams, selectLoading } from "../../redux/diagrams/selectors";
 import FolderDirectory from "../../components/FolderDirectory/FolderDirectory";
-import Block from "../../components/Block/Block";
 import TreeMapTable from "../../components/TreeMapTable/TreeMapTable";
+import Toolbar from "../../components/Toolbar/Toolbar";
+import Canvas from "../../components/Canvas/Canvas";
 
 export default function HomePage() {
   const [selectedLayer, setSelectedLayer] = useState(null);
@@ -21,39 +24,61 @@ export default function HomePage() {
     setSelectedLayer(layer);
   };
 
+  const handleSave = () => {
+    // Implement save functionality here
+    console.log("Save clicked");
+  };
+
+  const handleUndo = () => {
+    // Implement undo functionality here
+    console.log("Undo clicked");
+  };
+
+  const handleRedo = () => {
+    // Implement redo functionality here
+    console.log("Redo clicked");
+  };
+
   return (
     <div className={css.container}>
-      <div className={css.folder}>
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          diagrams.map((diagram) => (
-            <FolderDirectory
-              key={diagram.id || diagram._id}
-              data={diagram}
-              onLayerSelect={handleLayerSelect}
-              selectedLayer={selectedLayer}
-            />
-          ))
-        )}
+      <Toolbar onSave={handleSave} onUndo={handleUndo} onRedo={handleRedo} />
+    
+      <div className={css.folders}>
+        <div id="canvas" className={css.mainInfo}>
+          <div className={css.folder}>
+            {loading ? (
+              <p>Loading...</p>
+            ) : (
+              diagrams.map((diagram) => (
+                <FolderDirectory
+                  key={diagram.id || diagram._id}
+                  data={diagram}
+                  onLayerSelect={handleLayerSelect}
+                  selectedLayer={selectedLayer}
+                />
+              ))
+            )}
+          </div>
+          <div className={css.treemap}>
+            {loading ? (
+              <p>Loading...</p>
+            ) : (
+              diagrams.map((diagram) => (
+                <TreeMapTable
+                  key={diagram.id || diagram._id}
+                  data={diagram}
+                  selectedLayer={selectedLayer}
+                  onLayerSelect={handleLayerSelect}
+                />
+              ))
+            )}
+          </div>
+        </div>
+  
       </div>
       <div className={css.customizer}>
-        <Block selectedBlock={selectedLayer} onBlockChange={setSelectedLayer} />
-      </div>
-      <div className={css.treemap}>
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          diagrams.map((diagram) => (
-            <TreeMapTable
-              key={diagram.id || diagram._id}
-              data={diagram}
-              selectedLayer={selectedLayer}
-              onLayerSelect={handleLayerSelect}
-            />
-          ))
-        )}
-      </div>
+          <Canvas />
+        </div>
     </div>
   );
 }
