@@ -1,25 +1,35 @@
-// src/components/FolderDirectory/FolderDirectory.jsx
-
-import React from "react";
 import Tree from "rc-tree";
 import "rc-tree/assets/index.css";
+
+const buildTree = (blocks) => {
+  const map = new Map();
+  blocks.forEach(block => map.set(block.key, {...block, title: block.label, children: []}));
+  
+  const treeData = [];
+  blocks.forEach(block => {
+    if (block.parent) {
+      const parent = map.get(block.parent);
+      if (parent) {
+        parent.children.push(map.get(block.key));
+      }
+    } else {
+      treeData.push(map.get(block.key));
+    }
+  });
+  
+  return treeData;
+};
 
 const FolderDirectory = ({ data, onLayerSelect, selectedLayer }) => {
   if (!data || !data.blocks) {
     return <div>Loading...</div>;
   }
 
-  const folderStructure = data.blocks.map(block => ({
-    key: block.key,
-    title: block.label,
-    children: []
-  }));
-
   const treeData = [
     {
       key: data._id,
       title: data.diagramName,
-      children: folderStructure
+      children: buildTree(data.blocks)
     }
   ];
 

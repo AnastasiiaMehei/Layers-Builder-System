@@ -1,6 +1,4 @@
-// src/pages/HomePage/HomePage.jsx
-
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import css from "./HomePage.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDiagrams } from "../../redux/diagrams/operations";

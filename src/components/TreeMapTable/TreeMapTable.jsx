@@ -1,62 +1,59 @@
-// src/components/TreeMapTable/TreeMapTable.jsx
-
-import React from "react";
 import Draggable from "react-draggable";
+import styles from "./TreeMapTable.module.css"; // Імпорт CSS модуля
 
-const TreeMapTable = ({ data, selectedLayer, onLayerSelect }) => {
-  if (!data || !data.blocks) {
-    return <div>Loading...</div>;
-  }
-
-  const renderBlock = (block) => {
-    const x = isNaN(block.x) ? 0 : block.x;
-    const y = isNaN(block.y) ? 0 : block.y;
-    const width = isNaN(block.width) ? 100 : block.width;
-    const height = isNaN(block.height) ? 50 : block.height;
-
+const TreeMapTable = ({ data }) => {
+  const createTable = (nodes) => {
     return (
-      <Draggable key={block.key} position={{ x, y }}>
-        <g onClick={() => onLayerSelect(block)}>
-          {block.shape === 'rectangle' ? (
-            <rect
-              x={x}
-              y={y}
-              width={width}
-              height={height}
-              fill={block.color}
-              stroke="#000000"
-              strokeWidth="2"
-            />
-          ) : (
-            <circle
-              cx={x + width / 2}
-              cy={y + height / 2}
-              r={width / 2}
-              fill={block.color}
-              stroke="#000000"
-              strokeWidth="2"
-            />
-          )}
-          <text
-            x={x + 10}
-            y={y + 20}
-            fontSize="12"
-            fill="#ffffff"
-          >
-            {block.label}
-          </text>
-        </g>
-      </Draggable>
+      <table className={styles.table}>
+        <thead>
+          <tr>
+            {nodes
+              .map((node, index) => (
+                <th
+                  key={index}
+                  colSpan={node.children ? node.children.length : 1}
+                  style={{
+                    border: "1px solid #ddd",
+                    padding: "8px",
+                    textAlign: "center",
+                  }}
+                >
+                  {node.label}
+                </th>
+              ))}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            {nodes.map((node, index) =>
+              node.children ? (
+                <td
+                  key={index}
+                  colSpan={node.children.length || 1}
+                  style={{ border: "1px solid #ddd", padding: "8px" }}
+                >
+                  {createTable(node.children)}
+                </td>
+              ) : (
+                <td
+                  key={index}
+                  style={{ border: "1px solid #ddd", padding: "8px" }}
+                >
+                  <Draggable>
+                    <div className={styles.draggableBlock}>
+                      {node.label}
+                    </div>
+                  </Draggable>
+                </td>
+              )
+            )}
+          </tr>
+        </tbody>
+      </table>
     );
   };
 
-  return (
-    <div style={{ overflowX: "auto", height: "100vh", width: "1250px" }}>
-      <svg width="100%" height="100%">
-        {data.blocks.map(renderBlock)}
-      </svg>
-    </div>
-  );
+  return <div className={styles.treeMapTableContainer}>{createTable(data.blocks)}</div>;
 };
 
 export default TreeMapTable;

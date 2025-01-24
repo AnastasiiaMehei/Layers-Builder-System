@@ -1,35 +1,38 @@
 .treeMapTableContainer {
-    overflow-x: auto;
-    height: -webkit-fill-available;
+    position: relative;
+    height: 100vh;
+    width: 100%;
     padding: 10px;
     background-color: #f0f0f0;
     border: 1px solid #ccc;
-    width: 1216px;
+    overflow: auto;
   }
   
-  .blockGroup {
-    cursor: pointer;
+  .layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
   }
   
-  .blockRectangle {
+  .block {
+    position: absolute;
+    border: 1px solid #ccc;
+    cursor: move;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    height: 100%;
-    background-color: #88c0d0;
-    border: 2px solid #4c566a;
+    padding: 4px;
   }
   
-  .blockCircle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
+  .block.rectangle {
+    height: 50px; /* or block.height */
+    width: 100px; /* or block.width */
+  }
+  
+  .block.circle {
     border-radius: 50%;
-    background-color: #a3be8c;
-    border: 2px solid #4c566a;
+    width: 50px; /* or block.width */
+    height: 50px; /* or block.height */
   }
   
   .blockText {
