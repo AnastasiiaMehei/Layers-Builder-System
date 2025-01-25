@@ -58,6 +58,9 @@ export default function HomePage() {
                 />
               ))
             )}
+                <div className={css.customizer}>
+          <Canvas />
+        </div>
           </div>
           <div className={css.treemap}>
             {loading ? (
@@ -76,9 +79,7 @@ export default function HomePage() {
         </div>
   
       </div>
-      <div className={css.customizer}>
-          <Canvas />
-        </div>
+  
     </div>
   );
 }

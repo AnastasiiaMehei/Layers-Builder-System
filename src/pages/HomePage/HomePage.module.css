@@ -27,7 +27,9 @@
   display: flex;
   flex-direction: column;
 }
-
+.treemap {
+  width: 1200px;
+}
 .folder, .mainInfo, .customizer, .treemap {
   margin: 10px;
 }
