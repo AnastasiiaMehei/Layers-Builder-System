@@ -65,15 +65,8 @@ const FolderDirectory = ({ data, onLayerSelect, selectedLayer }) => {
         type="text"
         value={newLayerTitle}
         onChange={(e) => setNewLayerTitle(e.target.value)}
-        placeholder="Назва нового шару"
+        placeholder="New layer"
         className={styles.inputField}
-      />
-      <input
-        type="text"
-        value={selectedLayer ? selectedLayer.title : ""}
-        onChange={(e) => renameLayer(e.target.value)}
-        disabled={!selectedLayer}
-        className={`${styles.inputField} ${styles.renameField}`}
       />
       <Tree
         showLine
