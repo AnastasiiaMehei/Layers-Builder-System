@@ -1,21 +1,32 @@
 .treeMapTableContainer {
   position: relative;
-  height: 100vh;
+  /* height: 100vh; */
   width: 100%;
   padding: 10px;
   background-color: #f0f0f0;
   border: 1px solid #ccc;
   overflow: auto;
+  display: flex;
+  /* flex-direction: column; */
 }
-
 .layer {
   display: flex;
-  flex-wrap: wrap;
+      flex-wrap: wrap;
+      width: 100%;
+      flex-direction: row;
+}
+/* .layer > div {
+  width: 49%;
+} */
+.layer-block {  
+  flex: 1; 
+  box-sizing: border-box;
+  padding: 5px;
 }
 
-.layer1 {
+/* .layer1 {
   flex-direction: column;
-}
+} */
 
 .layer1-block-0, .layer1-block-1 {
   height: 100px;

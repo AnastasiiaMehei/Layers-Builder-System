@@ -1,6 +1,6 @@
 import React from "react";
 import Draggable from "react-draggable";
-import "./TreeMapTable.module.css";
+import css from './TreeMapTable.module.css'
 
 const Block = ({ node, onLayerSelect }) => {
   if (node.type === "file") {
@@ -18,7 +18,7 @@ const Block = ({ node, onLayerSelect }) => {
         >
           <strong>{node.title}</strong>
           {node.children && (
-            <div style={{ marginLeft: "20px" }}>
+            <div style={{ marginLeft: "20px"}}>
               {node.children.map((child) => (
                 <Block key={child.key} node={child} onLayerSelect={onLayerSelect} />
               ))}
@@ -37,12 +37,13 @@ const Block = ({ node, onLayerSelect }) => {
         border: "1px solid #ccc",
         cursor: "default",
         backgroundColor: node.color || "#ffffff",
+        flex:"1"
       }}
       onClick={() => onLayerSelect(node)}
     >
       <strong>{node.title}</strong>
       {node.children && (
-        <div style={{ marginLeft: "20px" }}>
+        <div style={{ marginLeft: "20px", display:"flex" }}>
           {node.children.map((child) => (
             <Block key={child.key} node={child} onLayerSelect={onLayerSelect} />
           ))}
@@ -57,10 +58,10 @@ const TreeMapBlocks = ({ data, onLayerSelect }) => {
     return <div>No data available.</div>;
   }
   return (
-<div className="treeMapTableContainer">
-      <div className="layer layer1">
+<div className={css.treeMapTableContainer}>
+      <div className={`${css.layer} ${css.layer1}`}>
         {data.blocks[0].children.map((block, index) => (
-          <Block key={block.key} node={block} onLayerSelect={onLayerSelect} className={`layer1-block-${index}`} />
+          <Block key={block.key} node={block} onLayerSelect={onLayerSelect} className={`${css.layer1-block}-${index}`} />
         ))}
       </div>
     </div>
