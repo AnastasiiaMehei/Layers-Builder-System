@@ -1,0 +1,45 @@
+.container {
+    padding: 10px;
+  }
+  
+  .inputField {
+    padding: 8px;
+    margin: 5px 0;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: calc(100% - 20px);
+  }
+  
+  .button {
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .addButton {
+    background-color: #28a745;
+    color: #fff;
+    width: 100px;
+  }
+  
+  .deleteButton {
+    background-color: #dc3545;
+    color: #fff;
+    width: 100px;
+
+  }
+  
+  .deleteButton:disabled {
+    opacity: 0.5;
+  }
+  
+  .renameField:disabled {
+    opacity: 0.5;
+  }
+  
+  .treeContainer {
+    margin-top: 20px;
+  }
+  
