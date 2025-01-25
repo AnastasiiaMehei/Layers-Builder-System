@@ -53,12 +53,11 @@ const Block = ({ node, onLayerSelect }) => {
 };
 
 const TreeMapBlocks = ({ data, onLayerSelect }) => {
-  if (!data) {
+  if (!data || !data.blocks || !data.blocks[0]) {
     return <div>No data available.</div>;
   }
-
   return (
-    <div className="treeMapTableContainer">
+<div className="treeMapTableContainer">
       <div className="layer layer1">
         {data.blocks[0].children.map((block, index) => (
           <Block key={block.key} node={block} onLayerSelect={onLayerSelect} className={`layer1-block-${index}`} />
