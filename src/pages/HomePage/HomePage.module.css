@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
 }
 
 .folders {
@@ -28,7 +29,7 @@
   flex-direction: column;
 }
 .treemap {
-  width: 1200px;
+  width: 100%;
 }
 .folder, .mainInfo, .customizer, .treemap {
   margin: 10px;

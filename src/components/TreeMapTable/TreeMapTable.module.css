@@ -5,15 +5,15 @@
   padding: 10px;
   background-color: #f0f0f0;
   border: 1px solid #ccc;
-  overflow: auto;
+  /* overflow: auto; */
   display: flex;
   /* flex-direction: column; */
 }
 .layer {
   display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       width: 100%;
-      flex-direction: row;
+
 }
 /* .layer > div {
   width: 49%;
@@ -23,7 +23,9 @@
   box-sizing: border-box;
   padding: 5px;
 }
-
+.layer > div > div > div > div {
+  flex-direction: column;
+}
 /* .layer1 {
   flex-direction: column;
 } */

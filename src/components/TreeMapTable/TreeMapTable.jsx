@@ -43,7 +43,7 @@ const Block = ({ node, onLayerSelect }) => {
     >
       <strong>{node.title}</strong>
       {node.children && (
-        <div style={{ marginLeft: "20px", display:"flex" }}>
+        <div style={{ marginLeft: "20px", display:"flex", flex:"1"}}>
           {node.children.map((child) => (
             <Block key={child.key} node={child} onLayerSelect={onLayerSelect} />
           ))}
