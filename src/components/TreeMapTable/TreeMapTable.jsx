@@ -1,4 +1,6 @@
+import React from "react";
 import Draggable from "react-draggable";
+import "./TreeMapTable.module.css";
 
 const Block = ({ node, onLayerSelect }) => {
   return (
@@ -32,10 +34,12 @@ const TreeMapBlocks = ({ data, onLayerSelect }) => {
   }
 
   return (
-    <div>
-      {data.blocks.map((block) => (
-        <Block key={block.key} node={block} onLayerSelect={onLayerSelect} />
-      ))}
+    <div className="treeMapTableContainer">
+      <div className="layer layer1">
+        {data.blocks[0].children.map((block, index) => (
+          <Block key={block.key} node={block} onLayerSelect={onLayerSelect} className={`layer1-block-${index}`} />
+        ))}
+      </div>
     </div>
   );
 };
