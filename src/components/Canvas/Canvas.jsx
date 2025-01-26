@@ -55,7 +55,7 @@ const Canvas = () => {
 
   return (
     <div id="canvas" className={css.canvas}>
-      <button className={css.addButton} onClick={addBlock}>Add Block</button>
+      {/* <button className={css.addButton} onClick={addBlock}>Add Block</button> */}
       <div className={css.blockContainer}>
         {blocks.map((block) => (
           <Block
