@@ -50,7 +50,6 @@ const FolderDirectory = ({ data, onLayerSelect, selectedLayer }) => {
 
   return (
     <div className={styles.container}>
-     
       <button onClick={addLayer} className={`${styles.button} ${styles.addButton}`}>
         Add Layer
       </button>

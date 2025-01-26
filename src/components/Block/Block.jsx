@@ -1,97 +1,54 @@
 import React, { useState } from "react";
 import Draggable from "react-draggable";
-import css from "./Block.module.css";
 
-const Block = ({ block, onUpdate, onDelete }) => {
-  const [editing, setEditing] = useState(false);
-  const [title, setTitle] = useState(block.title);
-  const [color, setColor] = useState(block.color);
-  const [width, setWidth] = useState(block.width);
-  const [height, setHeight] = useState(block.height);
-  const [shape, setShape] = useState(block.shape);
-  const [borderColor, setBorderColor] = useState(block.borderColor);
-  const [opacity, setOpacity] = useState(block.opacity);
+const Block = ({ node, onLayerSelect, level }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
 
-  const handleSave = () => {
-    const updatedBlock = {
-      ...block,
-      title,
-      color,
-      width,
-      height,
-      shape,
-      borderColor,
-      opacity
-    };
-    onUpdate(updatedBlock);
-    setEditing(false);
+  const handleClick = (e) => {
+    e.stopPropagation(); // Запобігаємо розповсюдженню кліку на батьківські елементи
+    setIsExpanded(!isExpanded);
+    onLayerSelect(node);
   };
 
-  return (
-    <Draggable>
-      <div
-        className={css.block}
-        style={{
-          backgroundColor: color,
-          width,
-          height,
-          border: `2px solid ${borderColor}`,
-          opacity,
-          borderRadius: shape === "rectangle" ? "4px" : "50%"
-        }}
-        onDoubleClick={() => setEditing(true)}
-      >
-        {editing ? (
-          <div className={css.editor}>
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-            <input
-              type="color"
-              value={color}
-              onChange={(e) => setColor(e.target.value)}
-            />
-            <input
-              type="number"
-              value={width}
-              onChange={(e) => setWidth(parseInt(e.target.value, 10))}
-            />
-            <input
-              type="number"
-              value={height}
-              onChange={(e) => setHeight(parseInt(e.target.value, 10))}
-            />
-            <input
-              type="text"
-              value={shape}
-              onChange={(e) => setShape(e.target.value)}
-            />
-            <input
-              type="color"
-              value={borderColor}
-              onChange={(e) => setBorderColor(e.target.value)}
-            />
-            <input
-              type="number"
-              step="0.1"
-              min="0"
-              max="1"
-              value={opacity}
-              onChange={(e) => setOpacity(parseFloat(e.target.value))}
-            />
-            <button onClick={handleSave}>Save</button>
-            <button className="delete" onClick={() => onDelete(block.key)}>Delete</button>
-          </div>
-        ) : (
-          <div>
-            {title}
-          </div>
-        )}
-      </div>
-    </Draggable>
+  const isDraggable = level >= 3; // Рухомими можуть бути елементи тільки починаючи з четвертого рівня
+
+  const getStyle = () => {
+    if (level === 0) {
+      return { display: 'flex', flexDirection: 'column' }; // Вертикальне розміщення для першого рівня
+    }
+    if (level === 1) {
+      return { display: 'flex', flexDirection: 'row' }; // Горизонтальне розміщення для другого рівня
+    }
+    if (level >= 3) {
+      return { display: 'flex', flexDirection: 'row' }; // Горизонтальне розміщення для четвертого рівня і вище
+    }
+    return {}; // Стандартний стиль для інших рівнів
+  };
+
+  const content = (
+    <div
+      style={{
+        margin: "4px",
+        padding: "8px",
+        border: "1px solid #ccc",
+        cursor: isDraggable ? "move" : "default",
+        backgroundColor: node.color || "#ffffff",
+        ...getStyle(level)
+      }}
+      onClick={handleClick}
+    >
+      <strong>{node.title}</strong>
+      {node.children && (
+        <div style={{ marginLeft: "20px", display: isExpanded ? "block" : "none" }}>
+          {node.children.map((child) => (
+            <Block key={child.key} node={child} onLayerSelect={onLayerSelect} level={level + 1} />
+          ))}
+        </div>
+      )}
+    </div>
   );
+
+  return isDraggable ? <Draggable>{content}</Draggable> : content;
 };
 
 export default Block;
