@@ -19,18 +19,18 @@ const Toolbar = ({ onSave, onUndo, onRedo }) => {
     });
   };
 
-  const handleExportAsPDF = async () => {
-    const canvasElement = document.querySelector("#canvas");
-    if (!canvasElement) {
-      console.error("Canvas element not found");
-      return;
-    }
-    const canvas = await html2canvas(canvasElement);
-    const imgData = canvas.toDataURL('image/png');
-    const pdf = new jsPDF();
-    pdf.addImage(imgData, 'PNG', 10, 10);
-    pdf.save("diagram.pdf");
-  };
+  // const handleExportAsPDF = async () => {
+  //   const canvasElement = document.querySelector("#canvas");
+  //   if (!canvasElement) {
+  //     console.error("Canvas element not found");
+  //     return;
+  //   }
+  //   const canvas = await html2canvas(canvasElement);
+  //   const imgData = canvas.toDataURL('image/png');
+  //   const pdf = new jsPDF();
+  //   pdf.addImage(imgData, 'PNG', 10, 10);
+  //   pdf.save("diagram.pdf");
+  // };
 
   return (
     <div className={css.toolbar}>
@@ -39,7 +39,7 @@ const Toolbar = ({ onSave, onUndo, onRedo }) => {
       <Button variant="contained" color="default" onClick={onRedo}>Redo</Button>
       <Button variant="contained" color="secondary" onClick={() => handleExportAsImage('png')}>Export as PNG</Button>
       <Button variant="contained" color="secondary" onClick={() => handleExportAsImage('jpeg')}>Export as JPEG</Button>
-      <Button variant="contained" color="secondary" onClick={handleExportAsPDF}>Export as PDF</Button>
+      {/* <Button variant="contained" color="secondary" onClick={handleExportAsPDF}>Export as PDF</Button> */}
     </div>
   );
 };
