@@ -1,6 +1,4 @@
-// src/components/Modal/Modal.jsx
 
-import React from 'react';
 import css from './Modal.module.css';
 
 const Modal = ({ isOpen, onClose, onSubmit, blockData, setBlockData }) => {

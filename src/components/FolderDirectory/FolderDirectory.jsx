@@ -33,15 +33,6 @@ const FolderDirectory = ({ data, onLayerSelect, selectedLayer }) => {
     onLayerSelect(null); // Deselect after deletion
   };
 
-  const renameLayer = (newTitle) => {
-    const newTreeData = treeData.map((layer) => {
-      if (layer.key === selectedLayer.key) {
-        return { ...layer, title: newTitle };
-      }
-      return layer;
-    });
-    setTreeData(newTreeData);
-  };
 
   const onSelect = (selectedKeys, info) => {
     const selectedNode = info.node;

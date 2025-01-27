@@ -44,12 +44,12 @@ export const deleteDiagram = createAsyncThunk(
   }
 );
 
-// PATCH @ /diagrams/:id
+// PUT @ /diagrams/:id
 export const updateDiagram = createAsyncThunk(
   "diagrams/updateDiagram",
   async ({ diagramId, updatedData }, thunkAPI) => {
     try {
-      const response = await api.patch(`/api/diagrams/${diagramId}`, updatedData);
+      const response = await api.put(`/api/diagrams/${diagramId}`, updatedData);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);

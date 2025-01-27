@@ -1,6 +1,4 @@
-// src/components/Toolbar/Toolbar.jsx
 
-import React from "react";
 import { saveAs } from 'file-saver';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
