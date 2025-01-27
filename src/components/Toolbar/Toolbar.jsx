@@ -1,7 +1,7 @@
 
 import { saveAs } from 'file-saver';
 import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+// import jsPDF from 'jspdf';
 import css from "./Toolbar.module.css";
 import Button from '@mui/material/Button';
 
