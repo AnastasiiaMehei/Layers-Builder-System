@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Draggable from "react-draggable";
 
 const Block = ({ node, onLayerSelect, level }) => {
@@ -39,7 +39,7 @@ const Block = ({ node, onLayerSelect, level }) => {
     >
       <strong>{node.title}</strong>
       {node.children && (
-        <div style={{ marginLeft: "20px", display: isExpanded ? "block" : "none" }}>
+        <div style={{ marginLeft: "20px", display: isExpanded ? "flex" : "none" }}>
           {node.children.map((child) => (
             <Block key={child.key} node={child} onLayerSelect={onLayerSelect} level={level + 1} />
           ))}

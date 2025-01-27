@@ -1,12 +1,10 @@
-// src/components/Canvas/Canvas.jsx
-
-import React, { useState } from "react";
+import { useState } from "react";
 import Block from "../Block/Block";
 import Modal from "../Modal/Modal";
 import { v4 as uuidv4 } from "uuid";
 import css from "./Canvas.module.css";
 
-const Canvas = () => {
+const Canvas = ({ selectedLayer, onUpdate }) => {
   const [blocks, setBlocks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [blockData, setBlockData] = useState({
@@ -26,9 +24,11 @@ const Canvas = () => {
   const handleSubmit = () => {
     const newBlock = {
       key: uuidv4(),
-      ...blockData
+      ...blockData,
+      parentKey: selectedLayer ? selectedLayer.key : null,
     };
     setBlocks([...blocks, newBlock]);
+    onUpdate(newBlock);
     setIsModalOpen(false);
     setBlockData({
       title: "New Block",
@@ -41,28 +41,16 @@ const Canvas = () => {
     });
   };
 
-  const updateBlock = (updatedBlock) => {
-    setBlocks(
-      blocks.map((block) =>
-        block.key === updatedBlock.key ? updatedBlock : block
-      )
-    );
-  };
-
-  const deleteBlock = (blockKey) => {
-    setBlocks(blocks.filter((block) => block.key !== blockKey));
-  };
-
   return (
     <div id="canvas" className={css.canvas}>
-      {/* <button className={css.addButton} onClick={addBlock}>Add Block</button> */}
+      <button className={css.addButton} onClick={addBlock}>Add Block</button>
       <div className={css.blockContainer}>
         {blocks.map((block) => (
           <Block
             key={block.key}
             block={block}
-            onUpdate={updateBlock}
-            onDelete={deleteBlock}
+            onUpdate={onUpdate}
+            parentLayer={selectedLayer}
           />
         ))}
       </div>
