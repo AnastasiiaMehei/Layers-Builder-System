@@ -5,7 +5,7 @@ import "rc-tree/assets/index.css";
 import styles from "./FolderDirectory.module.css";
 import { useDispatch } from "react-redux";
 import { updateDiagram, fetchDiagrams } from "../../redux/diagrams/operations";
-
+import Button from '@mui/material/Button';
 import Modal from "../Modal/Modal";
 
 ReactModal.setAppElement('#root');
@@ -162,23 +162,29 @@ export default function FolderDirectory  ({ data, diagramId, onLayerSelect, sele
 
   return (
     <div className={styles.container}>
-      <button onClick={openModal} className={`${styles.button} ${styles.addButton}`}>
+        <Button
+        variant="contained"
+        color="primary"
+        onClick={openModal}
+      >
         Add Layer
-      </button>
-      <button
+      </Button>
+      <Button
+        variant="contained"
+        color="secondary"
         onClick={deleteLayer}
         disabled={!selectedLayer}
-        className={`${styles.button} ${styles.deleteButton}`}
       >
         Delete Layer
-      </button>
-      <button
+      </Button>
+      <Button
+        variant="contained"
+        color="default"
         onClick={openRenameModal}
         disabled={!selectedLayer}
-        className={`${styles.button} ${styles.renameButton}`}
       >
         Rename Layer
-      </button>
+      </Button>
       <Tree
         showLine
         defaultExpandAll

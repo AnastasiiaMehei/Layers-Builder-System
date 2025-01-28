@@ -20,19 +20,22 @@
   }
   
   .addButton {
-    background-color: #28a745;
+    background-color: #007bff;
+    border: 1pz solid black;
     color: #fff;
     width: 100px;
   }
   
   .deleteButton {
-    background-color: #dc3545;
+    background-color: #007bff;
+    border: 1pz solid black;
     color: #fff;
     width: 100px;
 
   }
   .renameButton {
-    background-color: #28e6da;
+    background-color: #007bff;
+    border: 1pz solid black;
     color: #fff;
     width: 100px;
   }
