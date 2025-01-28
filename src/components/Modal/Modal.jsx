@@ -1,4 +1,7 @@
+import ReactModal from 'react-modal';
 
+// Додаємо це десь у верхній частині вашого коду, перед рендерингом компонента
+ReactModal.setAppElement('#root');
 import css from './Modal.module.css';
 
 const Modal = ({ isOpen, onClose, onSubmit, blockData, setBlockData }) => {
@@ -69,7 +72,7 @@ const Modal = ({ isOpen, onClose, onSubmit, blockData, setBlockData }) => {
               <option value="circle">Circle</option>
             </select>
           </label>
-          {/* <button className={css.blockAdd} type="submit">Add Block</button> */}
+          <button className={css.blockAdd} type="submit">Add Block</button>
         </form>
         <button onClick={onClose}>Close</button>
       </div>

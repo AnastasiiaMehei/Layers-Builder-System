@@ -1,9 +1,16 @@
+import ReactModal from 'react-modal';
+
+// Додаємо це десь у верхній частині вашого коду, перед рендерингом компонента
+ReactModal.setAppElement('#root');
 import { useState, useEffect } from "react";
 import Tree from "rc-tree";
 import "rc-tree/assets/index.css";
 import styles from "./FolderDirectory.module.css";
 import { useDispatch } from "react-redux";
-import { updateDiagram, fetchDiagrams } from "../../redux/diagrams/operations"; // Замініть на актуальний шлях до ваших дій
+import { updateDiagram, fetchDiagrams } from "../../redux/diagrams/operations";
+
+import Modal from "../Modal/Modal";
+
 const FolderDirectory = ({ data, diagramId, onLayerSelect, selectedLayer }) => {
   const processData = (data) => {
     if (!data || !data.blocks) {
@@ -20,6 +27,14 @@ const FolderDirectory = ({ data, diagramId, onLayerSelect, selectedLayer }) => {
 
   const [treeData, setTreeData] = useState(processData(data));
   const [newLayerTitle, setNewLayerTitle] = useState("");
+  const [blockData, setBlockData] = useState({
+    title: '',
+    color: '#ffffff',
+    borderColor: '#000000',
+    opacity: 1,
+    shape: 'rectangle'
+  });
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -29,15 +44,18 @@ const FolderDirectory = ({ data, diagramId, onLayerSelect, selectedLayer }) => {
 
   const addLayer = async () => {
     if (!selectedLayer) {
-      return; // Вихід, якщо жодна папка не обрана
+      return;
     }
 
     const newLayer = {
       key: `layer-${Date.now()}`,
-      title: newLayerTitle || "New Layer",
+      title: blockData.title || "New Layer",
       type: "folder",
-      color: "#ffffb4",
+      color: blockData.color,
       children: [],
+      borderColor: blockData.borderColor,
+      opacity: blockData.opacity,
+      shape: blockData.shape
     };
 
     const addLayerToNode = (nodes, key, newLayer) => {
@@ -48,14 +66,12 @@ const FolderDirectory = ({ data, diagramId, onLayerSelect, selectedLayer }) => {
             children: [...(node.children || []), newLayer],
           };
         }
-
         if (node.children) {
           return {
             ...node,
             children: addLayerToNode(node.children, key, newLayer),
           };
         }
-
         return node;
       });
     };
@@ -63,11 +79,9 @@ const FolderDirectory = ({ data, diagramId, onLayerSelect, selectedLayer }) => {
     const updatedTreeData = addLayerToNode(treeData, selectedLayer.key, newLayer);
     setTreeData(updatedTreeData);
     setNewLayerTitle("");
+    setIsModalOpen(false);
 
-    // Відправка оновлених даних до бази даних
     await dispatch(updateDiagram({ diagramId, updatedData: { blocks: updatedTreeData } }));
-    
-    // Оновлення діаграм після додавання нового шару
     dispatch(fetchDiagrams());
   };
 
@@ -78,14 +92,12 @@ const FolderDirectory = ({ data, diagramId, onLayerSelect, selectedLayer }) => {
           if (node.key === key) {
             return null;
           }
-
           if (node.children) {
             return {
               ...node,
               children: removeLayerFromNode(node.children, key).filter(Boolean),
             };
           }
-
           return node;
         })
         .filter(Boolean);
@@ -93,13 +105,18 @@ const FolderDirectory = ({ data, diagramId, onLayerSelect, selectedLayer }) => {
 
     const updatedTreeData = removeLayerFromNode(treeData, selectedLayer.key);
     setTreeData(updatedTreeData);
-    onLayerSelect(null); // Deselect after deletion
+    onLayerSelect(null);
 
-    // Відправка оновлених даних до бази даних
     await dispatch(updateDiagram({ diagramId, updatedData: { blocks: updatedTreeData } }));
-
-    // Оновлення діаграм після видалення шару
     dispatch(fetchDiagrams());
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   const onSelect = (selectedKeys, info) => {
@@ -109,7 +126,7 @@ const FolderDirectory = ({ data, diagramId, onLayerSelect, selectedLayer }) => {
 
   return (
     <div className={styles.container}>
-      <button onClick={addLayer} className={`${styles.button} ${styles.addButton}`}>
+      <button onClick={openModal} className={`${styles.button} ${styles.addButton}`}>
         Add Layer
       </button>
       <button
@@ -134,6 +151,15 @@ const FolderDirectory = ({ data, diagramId, onLayerSelect, selectedLayer }) => {
         selectedKeys={selectedLayer ? [selectedLayer.key] : []}
         className={styles.treeContainer}
       />
+<ReactModal isOpen={isModalOpen} onRequestClose={closeModal} appElement={document.getElementById('root')}>
+  <Modal
+    isOpen={isModalOpen}
+    onClose={closeModal}
+    onSubmit={addLayer}
+    blockData={blockData}
+    setBlockData={setBlockData}
+  />
+</ReactModal>
     </div>
   );
 };

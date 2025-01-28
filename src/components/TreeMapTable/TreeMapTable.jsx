@@ -5,6 +5,7 @@ import {
   TransformWrapper,
   TransformComponent,
 } from "react-zoom-pan-pinch";
+
 const TreeMapTable = ({ data, onLayerSelect, selectedLayer }) => {
   if (!data || !data.blocks || !data.blocks[0]) {
     return <div>No data available.</div>;
@@ -42,4 +43,4 @@ const TreeMapTable = ({ data, onLayerSelect, selectedLayer }) => {
   );
 };
 
-export default TreeMapTable
+export default TreeMapTable;
