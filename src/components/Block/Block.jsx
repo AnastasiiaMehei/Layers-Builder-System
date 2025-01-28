@@ -3,38 +3,40 @@ import Draggable from "react-draggable";
 
 const Block = ({ node, onLayerSelect, level }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const blockRef = useRef(null); // Create a ref for the draggable element
+  const blockRef = useRef(null);
 
   const handleClick = (e) => {
-    e.stopPropagation(); // Prevent click propagation to parent elements
+    e.stopPropagation();
     setIsExpanded(!isExpanded);
     onLayerSelect(node);
   };
 
-  const isDraggable = level >= 3; // Only elements from the fourth level and above are draggable
+  const isDraggable = level >= 3;
 
   const getStyle = () => {
     if (level === 0) {
-      return { display: 'flex', flexDirection: 'column' }; // Vertical layout for the first level
+      return { display: 'flex', flexDirection: 'column' };
     }
     if (level === 1) {
-      return { display: 'flex', flexDirection: 'row' }; // Horizontal layout for the second level
+      return { display: 'flex', flexDirection: 'row' };
     }
     if (level >= 3) {
-      return { display: 'flex', flexDirection: 'row' }; // Horizontal layout for the fourth level and above
+      return { display: 'flex', flexDirection: 'row' };
     }
-    return {}; // Default style for other levels
+    return {};
   };
 
   const content = (
     <div
-      ref={blockRef} // Attach the ref to the div
+      ref={blockRef}
       style={{
         margin: "4px",
         padding: "8px",
-        border: "1px solid #ccc",
+        border: `1px solid ${node.borderColor || "#ccc"}`,
         cursor: isDraggable ? "move" : "default",
         backgroundColor: node.color || "#ffffff",
+        opacity: node.opacity || 1,
+        borderRadius: node.shape === "circle" ? "50%" : "0",
         ...getStyle(level)
       }}
       onClick={handleClick}

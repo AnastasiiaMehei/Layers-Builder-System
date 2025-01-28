@@ -1,6 +1,4 @@
 import ReactModal from 'react-modal';
-
-// Додаємо це десь у верхній частині вашого коду, перед рендерингом компонента
 ReactModal.setAppElement('#root');
 import { useState, useEffect } from "react";
 import Tree from "rc-tree";
