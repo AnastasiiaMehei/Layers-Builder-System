@@ -4,7 +4,6 @@ import "rc-tree/assets/index.css";
 import styles from "./FolderDirectory.module.css";
 import { useDispatch } from "react-redux";
 import { updateDiagram, fetchDiagrams } from "../../redux/diagrams/operations"; // Замініть на актуальний шлях до ваших дій
-
 const FolderDirectory = ({ data, diagramId, onLayerSelect, selectedLayer }) => {
   const processData = (data) => {
     if (!data || !data.blocks) {
@@ -73,7 +72,26 @@ const FolderDirectory = ({ data, diagramId, onLayerSelect, selectedLayer }) => {
   };
 
   const deleteLayer = async () => {
-    const updatedTreeData = treeData.filter((layer) => layer.key !== selectedLayer.key);
+    const removeLayerFromNode = (nodes, key) => {
+      return nodes
+        .map((node) => {
+          if (node.key === key) {
+            return null;
+          }
+
+          if (node.children) {
+            return {
+              ...node,
+              children: removeLayerFromNode(node.children, key).filter(Boolean),
+            };
+          }
+
+          return node;
+        })
+        .filter(Boolean);
+    };
+
+    const updatedTreeData = removeLayerFromNode(treeData, selectedLayer.key);
     setTreeData(updatedTreeData);
     onLayerSelect(null); // Deselect after deletion
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import css from "./HomePage.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDiagrams } from "../../redux/diagrams/operations";
+import { fetchDiagrams, deleteDiagram } from "../../redux/diagrams/operations";
 import { selectDiagrams, selectLoading } from "../../redux/diagrams/selectors";
 import FolderDirectory from "../../components/FolderDirectory/FolderDirectory";
 import TreeMapTable from "../../components/TreeMapTable/TreeMapTable";
@@ -20,6 +20,11 @@ export default function HomePage() {
 
   const handleLayerSelect = (layer) => {
     setSelectedLayer(layer);
+  };
+
+  const handleDeleteDiagram = async (diagramId) => {
+    await dispatch(deleteDiagram(diagramId));
+    dispatch(fetchDiagrams());
   };
 
   const handleSave = () => {
@@ -54,6 +59,7 @@ export default function HomePage() {
                   diagramId={diagram.id || diagram._id} // Переконайтеся, що передається правильний diagramId
                   onLayerSelect={handleLayerSelect}
                   selectedLayer={selectedLayer}
+                  onDeleteDiagram={handleDeleteDiagram}
                 />
               ))
             )}
