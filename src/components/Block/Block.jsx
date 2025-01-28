@@ -11,7 +11,7 @@ const Block = ({ node, onLayerSelect, level }) => {
     onLayerSelect(node);
   };
 
-  const isDraggable = level >= 3;
+  const isDraggable = level >= 3; // Allow dragging for all levels
 
   const getStyle = () => {
     if (level === 0) {
@@ -52,7 +52,11 @@ const Block = ({ node, onLayerSelect, level }) => {
     </div>
   );
 
-  return isDraggable ? <Draggable nodeRef={blockRef}>{content}</Draggable> : content;
+  return isDraggable ? (
+    <Draggable nodeRef={blockRef}>
+      <div ref={blockRef}>{content}</div>
+    </Draggable>
+  ) : content;
 };
 
 export default Block;
