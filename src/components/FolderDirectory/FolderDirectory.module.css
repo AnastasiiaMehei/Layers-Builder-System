@@ -31,7 +31,11 @@
     width: 100px;
 
   }
-  
+  .renameButton {
+    background-color: #28e6da;
+    color: #fff;
+    width: 100px;
+  }
   .deleteButton:disabled {
     opacity: 0.5;
   }
