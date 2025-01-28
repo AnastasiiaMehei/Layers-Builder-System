@@ -136,13 +136,13 @@ const FolderDirectory = ({ data, diagramId, onLayerSelect, selectedLayer }) => {
       >
         Delete Layer
       </button>
-      <input
+      {/* <input
         type="text"
         value={newLayerTitle}
         onChange={(e) => setNewLayerTitle(e.target.value)}
         placeholder="New layer"
         className={styles.inputField}
-      />
+      /> */}
       <Tree
         showLine
         defaultExpandAll
