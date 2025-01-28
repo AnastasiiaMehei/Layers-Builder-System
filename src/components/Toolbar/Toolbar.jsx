@@ -4,8 +4,7 @@ import html2canvas from 'html2canvas';
 // import jsPDF from 'jspdf';
 import css from "./Toolbar.module.css";
 import Button from '@mui/material/Button';
-
-const Toolbar = ({ onSave, onUndo, onRedo }) => {
+export default function Toolbar () {
 
   const handleExportAsImage = async (format) => {
     const canvasElement = document.querySelector("#canvas");
@@ -44,4 +43,4 @@ const Toolbar = ({ onSave, onUndo, onRedo }) => {
   );
 };
 
-export default Toolbar;
+

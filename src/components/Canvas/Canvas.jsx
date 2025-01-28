@@ -4,7 +4,7 @@ import Modal from "../Modal/Modal";
 import { v4 as uuidv4 } from "uuid";
 import css from "./Canvas.module.css";
 
-const Canvas = ({ selectedLayer, onUpdate }) => {
+export default function Canvas ({ selectedLayer, onUpdate })  {
   const [blocks, setBlocks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [blockData, setBlockData] = useState({
@@ -65,4 +65,3 @@ const Canvas = ({ selectedLayer, onUpdate }) => {
   );
 };
 
-export default Canvas;

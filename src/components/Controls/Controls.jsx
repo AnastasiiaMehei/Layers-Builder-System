@@ -1,6 +1,6 @@
 import Button from '@mui/material/Button';
 
-const Controls = ({ zoomIn, zoomOut, resetTransform }) => {
+export default function  Controls ({ zoomIn, zoomOut, resetTransform }) {
   return (
     <div className="tools">
       <Button variant="contained" color="primary" onClick={() => zoomIn()}>
@@ -16,4 +16,4 @@ const Controls = ({ zoomIn, zoomOut, resetTransform }) => {
   );
 };
 
-export default Controls;
+

@@ -1,5 +1,4 @@
 import ReactModal from 'react-modal';
-ReactModal.setAppElement('#root');
 import { useState, useEffect } from "react";
 import Tree from "rc-tree";
 import "rc-tree/assets/index.css";
@@ -9,7 +8,9 @@ import { updateDiagram, fetchDiagrams } from "../../redux/diagrams/operations";
 
 import Modal from "../Modal/Modal";
 
-const FolderDirectory = ({ data, diagramId, onLayerSelect, selectedLayer }) => {
+ReactModal.setAppElement('#root');
+
+export default function FolderDirectory  ({ data, diagramId, onLayerSelect, selectedLayer }) {
   const processData = (data) => {
     if (!data || !data.blocks) {
       return [];
@@ -24,7 +25,6 @@ const FolderDirectory = ({ data, diagramId, onLayerSelect, selectedLayer }) => {
   };
 
   const [treeData, setTreeData] = useState(processData(data));
-  const [newLayerTitle, setNewLayerTitle] = useState("");
   const [blockData, setBlockData] = useState({
     title: '',
     color: '#ffffff',
@@ -76,7 +76,6 @@ const FolderDirectory = ({ data, diagramId, onLayerSelect, selectedLayer }) => {
 
     const updatedTreeData = addLayerToNode(treeData, selectedLayer.key, newLayer);
     setTreeData(updatedTreeData);
-    setNewLayerTitle("");
     setIsModalOpen(false);
 
     await dispatch(updateDiagram({ diagramId, updatedData: { blocks: updatedTreeData } }));
@@ -134,13 +133,6 @@ const FolderDirectory = ({ data, diagramId, onLayerSelect, selectedLayer }) => {
       >
         Delete Layer
       </button>
-      {/* <input
-        type="text"
-        value={newLayerTitle}
-        onChange={(e) => setNewLayerTitle(e.target.value)}
-        placeholder="New layer"
-        className={styles.inputField}
-      /> */}
       <Tree
         showLine
         defaultExpandAll
@@ -149,17 +141,16 @@ const FolderDirectory = ({ data, diagramId, onLayerSelect, selectedLayer }) => {
         selectedKeys={selectedLayer ? [selectedLayer.key] : []}
         className={styles.treeContainer}
       />
-<ReactModal isOpen={isModalOpen} onRequestClose={closeModal} appElement={document.getElementById('root')}>
-  <Modal
-    isOpen={isModalOpen}
-    onClose={closeModal}
-    onSubmit={addLayer}
-    blockData={blockData}
-    setBlockData={setBlockData}
-  />
-</ReactModal>
+      <ReactModal isOpen={isModalOpen} onRequestClose={closeModal}>
+        <Modal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          onSubmit={addLayer}
+          blockData={blockData}
+          setBlockData={setBlockData}
+        />
+      </ReactModal>
     </div>
   );
 };
 
-export default FolderDirectory;

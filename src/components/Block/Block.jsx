@@ -1,7 +1,8 @@
 import { useState, useRef } from "react";
 import Draggable from "react-draggable";
 
-const Block = ({ node, onLayerSelect, level }) => {
+
+export default function Block ({ node, onLayerSelect, level }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const blockRef = useRef(null);
 
@@ -59,4 +60,3 @@ const Block = ({ node, onLayerSelect, level }) => {
   ) : content;
 };
 
-export default Block;

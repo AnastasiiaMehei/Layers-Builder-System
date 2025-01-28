@@ -2,7 +2,7 @@
 import { useEffect, useRef } from "react";
 import * as d3 from "d3";
 
-const TreeMap = ({ data }) => {
+export default function  TreeMap ({ data }) {
   const ref = useRef();
 
   useEffect(() => {
@@ -43,4 +43,3 @@ const TreeMap = ({ data }) => {
   return <svg ref={ref}></svg>;
 };
 
-export default TreeMap;

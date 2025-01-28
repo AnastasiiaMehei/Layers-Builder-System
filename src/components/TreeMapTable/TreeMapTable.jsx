@@ -5,8 +5,7 @@ import {
   TransformWrapper,
   TransformComponent,
 } from "react-zoom-pan-pinch";
-
-const TreeMapTable = ({ data, onLayerSelect, selectedLayer }) => {
+export default function TreeMapTable ({ data, onLayerSelect, selectedLayer }) {
   if (!data || !data.blocks || !data.blocks[0]) {
     return <div>No data available.</div>;
   }
@@ -18,7 +17,7 @@ const TreeMapTable = ({ data, onLayerSelect, selectedLayer }) => {
         initialPositionX={200}
         initialPositionY={100}
       >
-        {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+        {({ zoomIn, zoomOut, resetTransform }) => (
           <>
             <Controls zoomIn={zoomIn} zoomOut={zoomOut} resetTransform={resetTransform} />  
             <TransformComponent>
@@ -43,4 +42,3 @@ const TreeMapTable = ({ data, onLayerSelect, selectedLayer }) => {
   );
 };
 
-export default TreeMapTable;

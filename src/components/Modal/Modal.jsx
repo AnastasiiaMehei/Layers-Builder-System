@@ -4,7 +4,8 @@ import ReactModal from 'react-modal';
 ReactModal.setAppElement('#root');
 import css from './Modal.module.css';
 
-const Modal = ({ isOpen, onClose, onSubmit, blockData, setBlockData }) => {
+
+export default function Modal ({ isOpen, onClose, onSubmit, blockData, setBlockData })  {
   if (!isOpen) return null;
 
   const handleChange = (e) => {
@@ -79,5 +80,3 @@ const Modal = ({ isOpen, onClose, onSubmit, blockData, setBlockData }) => {
     </div>
   );
 };
-
-export default Modal;

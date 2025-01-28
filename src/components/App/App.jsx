@@ -7,7 +7,8 @@ const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
 import Layout from "../Layout/Layout";
 import { selectLoading } from "../../redux/diagrams/selectors";
 
-function App() {
+
+export default function App() {
   const loading = useSelector(selectLoading);
   return  (
       <>
@@ -24,5 +25,4 @@ function App() {
     </>
   )
 }
-
-export default App
+ 
