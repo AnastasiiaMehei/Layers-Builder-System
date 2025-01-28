@@ -34,9 +34,9 @@ const Toolbar = ({ onSave, onUndo, onRedo }) => {
 
   return (
     <div className={css.toolbar}>
-      <Button variant="contained" color="primary" onClick={onSave}>Save</Button>
+      {/* <Button variant="contained" color="primary" onClick={onSave}>Save</Button>
       <Button variant="contained" color="default" onClick={onUndo}>Undo</Button>
-      <Button variant="contained" color="default" onClick={onRedo}>Redo</Button>
+      <Button variant="contained" color="default" onClick={onRedo}>Redo</Button> */}
       <Button variant="contained" color="secondary" onClick={() => handleExportAsImage('png')}>Export as PNG</Button>
       <Button variant="contained" color="secondary" onClick={() => handleExportAsImage('jpeg')}>Export as JPEG</Button>
       {/* <Button variant="contained" color="secondary" onClick={handleExportAsPDF}>Export as PDF</Button> */}

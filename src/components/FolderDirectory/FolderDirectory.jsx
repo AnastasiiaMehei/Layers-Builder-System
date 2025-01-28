@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Tree from "rc-tree";
 import "rc-tree/assets/index.css";
 import styles from "./FolderDirectory.module.css";
+import { useDispatch } from "react-redux";
+import { updateDiagram } from "../../redux/diagrams/operations"; // Замініть на актуальний шлях до ваших дій
 
-const FolderDirectory = ({ data, onLayerSelect, selectedLayer }) => {
+const FolderDirectory = ({ data, diagramId, onLayerSelect, selectedLayer }) => {
   const processData = (data) => {
     if (!data || !data.blocks) {
       return [];
@@ -11,6 +13,8 @@ const FolderDirectory = ({ data, onLayerSelect, selectedLayer }) => {
     return data.blocks.map((block) => ({
       key: block.key,
       title: block.title,
+      type: block.type,
+      color: block.color,
       children: block.children ? processData({ blocks: block.children }) : [],
     }));
   };
@@ -18,21 +22,65 @@ const FolderDirectory = ({ data, onLayerSelect, selectedLayer }) => {
   const [treeData, setTreeData] = useState(processData(data));
   const [newLayerTitle, setNewLayerTitle] = useState("");
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setTreeData(processData(data));
+  }, [data]);
+
+  useEffect(() => {
+    console.log("Diagram ID:", diagramId); // Додати лог для перевірки diagramId
+  }, [diagramId]);
+
   const addLayer = () => {
+    if (!selectedLayer) {
+      return; // Вихід, якщо жодна папка не обрана
+    }
+
     const newLayer = {
       key: `layer-${Date.now()}`,
       title: newLayerTitle || "New Layer",
+      type: "folder",
+      color: "#ffffb4",
       children: [],
     };
-    setTreeData([...treeData, newLayer]);
+
+    const addLayerToNode = (nodes, key, newLayer) => {
+      return nodes.map((node) => {
+        if (node.key === key) {
+          return {
+            ...node,
+            children: [...(node.children || []), newLayer],
+          };
+        }
+
+        if (node.children) {
+          return {
+            ...node,
+            children: addLayerToNode(node.children, key, newLayer),
+          };
+        }
+
+        return node;
+      });
+    };
+
+    const updatedTreeData = addLayerToNode(treeData, selectedLayer.key, newLayer);
+    setTreeData(updatedTreeData);
     setNewLayerTitle("");
+
+    // Відправка оновлених даних до бази даних
+    dispatch(updateDiagram({ diagramId, updatedData: { blocks: updatedTreeData } }));
   };
 
   const deleteLayer = () => {
-    setTreeData(treeData.filter((layer) => layer.key !== selectedLayer.key));
+    const updatedTreeData = treeData.filter((layer) => layer.key !== selectedLayer.key);
+    setTreeData(updatedTreeData);
     onLayerSelect(null); // Deselect after deletion
-  };
 
+    // Відправка оновлених даних до бази даних
+    dispatch(updateDiagram({ diagramId, updatedData: { blocks: updatedTreeData } }));
+  };
 
   const onSelect = (selectedKeys, info) => {
     const selectedNode = info.node;
