@@ -33,6 +33,7 @@ export default function FolderDirectory  ({ data, diagramId, onLayerSelect, sele
     shape: 'rectangle'
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isRenameModalOpen, setIsRenameModalOpen] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -108,12 +109,50 @@ export default function FolderDirectory  ({ data, diagramId, onLayerSelect, sele
     dispatch(fetchDiagrams());
   };
 
+  const renameLayer = async () => {
+    const renameNodeTitle = (nodes, key, newTitle) => {
+      return nodes.map((node) => {
+        if (node.key === key) {
+          return {
+            ...node,
+            title: newTitle,
+          };
+        }
+        if (node.children) {
+          return {
+            ...node,
+            children: renameNodeTitle(node.children, key, newTitle),
+          };
+        }
+        return node;
+      });
+    };
+
+    const updatedTreeData = renameNodeTitle(treeData, selectedLayer.key, blockData.title);
+    setTreeData(updatedTreeData);
+    setIsRenameModalOpen(false);
+
+    await dispatch(updateDiagram({ diagramId, updatedData: { blocks: updatedTreeData } }));
+    dispatch(fetchDiagrams());
+  };
+
   const openModal = () => {
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const openRenameModal = () => {
+    if (selectedLayer) {
+      setBlockData((prevData) => ({ ...prevData, title: selectedLayer.title }));
+    }
+    setIsRenameModalOpen(true);
+  };
+
+  const closeRenameModal = () => {
+    setIsRenameModalOpen(false);
   };
 
   const onSelect = (selectedKeys, info) => {
@@ -133,6 +172,13 @@ export default function FolderDirectory  ({ data, diagramId, onLayerSelect, sele
       >
         Delete Layer
       </button>
+      <button
+        onClick={openRenameModal}
+        disabled={!selectedLayer}
+        className={`${styles.button} ${styles.renameButton}`}
+      >
+        Rename Layer
+      </button>
       <Tree
         showLine
         defaultExpandAll
@@ -150,7 +196,15 @@ export default function FolderDirectory  ({ data, diagramId, onLayerSelect, sele
           setBlockData={setBlockData}
         />
       </ReactModal>
+      <ReactModal isOpen={isRenameModalOpen} onRequestClose={closeRenameModal}>
+        <Modal
+          isOpen={isRenameModalOpen}
+          onClose={closeRenameModal}
+          onSubmit={renameLayer}
+          blockData={blockData}
+          setBlockData={setBlockData}
+        />
+      </ReactModal>
     </div>
   );
 };
-
