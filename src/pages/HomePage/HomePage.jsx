@@ -49,11 +49,11 @@ export default function HomePage() {
             ) : (
               diagrams.map((diagram) => (
                 <FolderDirectory
-                key={diagram.id || diagram._id}
-                data={diagram}
-                diagramId={diagram.id || diagram._id} // Переконайтеся, що передається правильний diagramId
-                onLayerSelect={handleLayerSelect}
-                selectedLayer={selectedLayer}
+                  key={diagram.id || diagram._id}
+                  data={diagram}
+                  diagramId={diagram.id || diagram._id} // Переконайтеся, що передається правильний diagramId
+                  onLayerSelect={handleLayerSelect}
+                  selectedLayer={selectedLayer}
                 />
               ))
             )}

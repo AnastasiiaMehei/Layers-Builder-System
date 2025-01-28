@@ -3,7 +3,7 @@ import Tree from "rc-tree";
 import "rc-tree/assets/index.css";
 import styles from "./FolderDirectory.module.css";
 import { useDispatch } from "react-redux";
-import { updateDiagram } from "../../redux/diagrams/operations"; // Замініть на актуальний шлях до ваших дій
+import { updateDiagram, fetchDiagrams } from "../../redux/diagrams/operations"; // Замініть на актуальний шлях до ваших дій
 
 const FolderDirectory = ({ data, diagramId, onLayerSelect, selectedLayer }) => {
   const processData = (data) => {
@@ -28,11 +28,7 @@ const FolderDirectory = ({ data, diagramId, onLayerSelect, selectedLayer }) => {
     setTreeData(processData(data));
   }, [data]);
 
-  useEffect(() => {
-    console.log("Diagram ID:", diagramId); // Додати лог для перевірки diagramId
-  }, [diagramId]);
-
-  const addLayer = () => {
+  const addLayer = async () => {
     if (!selectedLayer) {
       return; // Вихід, якщо жодна папка не обрана
     }
@@ -70,16 +66,22 @@ const FolderDirectory = ({ data, diagramId, onLayerSelect, selectedLayer }) => {
     setNewLayerTitle("");
 
     // Відправка оновлених даних до бази даних
-    dispatch(updateDiagram({ diagramId, updatedData: { blocks: updatedTreeData } }));
+    await dispatch(updateDiagram({ diagramId, updatedData: { blocks: updatedTreeData } }));
+    
+    // Оновлення діаграм після додавання нового шару
+    dispatch(fetchDiagrams());
   };
 
-  const deleteLayer = () => {
+  const deleteLayer = async () => {
     const updatedTreeData = treeData.filter((layer) => layer.key !== selectedLayer.key);
     setTreeData(updatedTreeData);
     onLayerSelect(null); // Deselect after deletion
 
     // Відправка оновлених даних до бази даних
-    dispatch(updateDiagram({ diagramId, updatedData: { blocks: updatedTreeData } }));
+    await dispatch(updateDiagram({ diagramId, updatedData: { blocks: updatedTreeData } }));
+
+    // Оновлення діаграм після видалення шару
+    dispatch(fetchDiagrams());
   };
 
   const onSelect = (selectedKeys, info) => {
